@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+{projects.length === 0 ? (
+  <p class="entry-desc">No projects written up yet.</p>
+) : (
+  <ul class="entry-list">
+    {projects.map((project) => (
+      <li>
+        <p class="entry-title">
+          <a href={`/projects/${project.id}`}>{project.data.title}</a>
+        </p>
+        <p class="entry-meta">
+          <span>{project.data.period ?? project.data.year}</span>
+          {project.data.status === 'active' && (
+            <span class="status status--active">Active</span>
+          )}
+        </p>
+        <p class="entry-desc">{project.data.description}</p>
+        {project.data.tags.length > 0 && (
+          <ul class="tags" aria-label="Tags">
+            {project.data.tags.map((tag) => <li>{tag}</li>)}
+          </ul>
+        )}
+      </li>
+    ))}
+  </ul>
+)}

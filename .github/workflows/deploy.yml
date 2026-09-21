@@ -1,0 +1,65 @@
+name: Deploy to GitHub Pages
+
+# THE PUBLISH GATE. Builds main and uploads it to Pages.
+#
+# It re-runs the tests rather than trusting that CI already passed: the artifact
+# this uploads is built HERE, and "the same commit was green in another workflow"
+# is a proxy for "what I am about to publish is sound", not the thing itself.
+#
+# ⚠️ Pages must be set to "GitHub Actions" as its source (Settings → Pages →
+# Build and deployment → Source). On the default "Deploy from a branch" this
+# workflow succeeds and publishes NOTHING — the deploy step is green and the
+# live site is whatever the branch had. See docs/DEPLOY.md.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; never cancel one mid-flight, or Pages can be left
+# serving a half-uploaded artifact.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Test the artifact about to be published
+        run: npm test
+
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

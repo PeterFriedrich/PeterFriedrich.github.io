@@ -1,0 +1,60 @@
+name: CI
+
+# THE MERGE GATE. Runs on every PR and every push to main. Without one, "it
+# builds on my machine" attests to a laptop, not to the merged state.
+#
+# Deliberately OFFLINE past `npm ci` and secret-free: the build, the tests and
+# the doc guards read only committed files. Nothing here can go red for a reason
+# unrelated to the change — a gate that flakes is a gate people learn to ignore.
+#
+# This gates the CHANGE. `deploy.yml` gates the PUBLISH, and runs the same
+# checks again before anything reaches the live site. Two questions, two runs.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # tests/loaded-path.test.mjs reads git history
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # The build runs BEFORE the tests on purpose: tests/content.test.mjs
+      # asserts against dist/, and skips itself when dist/ is absent. A test
+      # that silently skips on the merge gate is worse than no test.
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
+
+      # Fails if dist/ never appeared, which would turn the content tests into
+      # green skips. Guards the guard.
+      - name: Assert the build produced a site
+        run: test -s dist/index.html && test -s dist/rss.xml
+
+      # Ubuntu runners ship python3; the guards are stdlib-only, so there is
+      # nothing to install and no lockfile to drift.
+      - name: Check doc citations
+        run: python3 scripts/check_doc_citations.py
+
+      - name: Check decisions log
+        run: python3 scripts/check_decisions_log.py

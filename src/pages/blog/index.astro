@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { publishedPosts } from '../../lib/content';
+
+const posts = await publishedPosts();
+---
+
+<BaseLayout
+  title="Writing"
+  description="Posts on data science, machine learning, and the tooling around them."
+>
+  <h1>Writing</h1>
+  <p class="lede">
+    Notes on projects, data that turned out to be wrong, and tools worth the
+    setup. <a href="/rss.xml">RSS</a>.
+  </p>
+  <PostList posts={posts} />
+</BaseLayout>

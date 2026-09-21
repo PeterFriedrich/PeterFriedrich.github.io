@@ -1,0 +1,18 @@
+---
+import { SOCIAL } from '../consts';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <ul>
+      {SOCIAL.map((link) => (
+        <li>
+          <a href={link.href} rel="me noopener">{link.label}</a>
+        </li>
+      ))}
+      <li><a href="/rss.xml">RSS</a></li>
+    </ul>
+    <p>&copy; {year} Peter Friedrich. Built with Astro, served by GitHub Pages.</p>
+  </div>
+</footer>
