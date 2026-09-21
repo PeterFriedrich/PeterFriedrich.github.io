@@ -10,21 +10,15 @@ the symptom before acting on it.
 
 ## Open work
 
-### Blocking the first deploy
+### Deploy (first deploy landed 2026-09-21)
 
-- [ ] **Rename the repo to `PeterFriedrich.github.io`** — GitHub Settings →
-      General → Repository name. Until this happens the site serves at
-      `/main-portfolio/` and every absolute URL the build emits is wrong.
-      `tests/site-config.test.mjs` pins `site` to the user-site root; it will
-      keep passing while the live URLs 404, because a test cannot see the repo's
-      name. Done when `https://peterfriedrich.github.io/` serves the new site.
-- [ ] **Set Pages source to "GitHub Actions"** — Settings → Pages → Build and
-      deployment → Source. On the default "Deploy from a branch", `deploy.yml`
-      goes green and publishes nothing. See `docs/DEPLOY.md`.
-- [ ] **Publish at least one real project entry before merging to `main`** —
-      the seeded entries are `draft: true`, so a deploy today replaces the v1
-      site with an empty one. Either port a project (below) or accept the empty
-      launch deliberately.
+- [ ] **The live site is currently EMPTY** — this is now a fact, not a risk.
+      PR #9 merged and deployed while both seeded entries were `draft: true`,
+      so `https://peterfriedrich.github.io/` shows "No projects written up yet"
+      and "Nothing published yet" where the v1 site used to list five projects.
+      Closing this means publishing at least one real project entry (see
+      "Content" below) or deliberately deciding the empty state is fine while
+      the content gets written.
 
 ### Content
 
@@ -66,3 +60,8 @@ the symptom before acting on it.
       context pressure ever becomes real here.
 
 ## Done
+
+Closed items moved out of `## Open work` live in **`docs/TODO_archive.md`** — one line each below, reasoning there.
+
+- [x] **Rename the repo to `PeterFriedrich.github.io`** — DONE 2026-09-21 · `docs/TODO_archive.md`
+- [x] **Set Pages source to "GitHub Actions"** · `docs/TODO_archive.md`
