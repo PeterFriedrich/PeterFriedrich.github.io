@@ -1,0 +1,74 @@
+* {
+    font-family: Helvetica;
+}
+
+body {
+    margin: 10px 200px;
+    background-color: lightcyan;
+    text-align: center;
+}
+
+p {
+    font-size: 18px;
+    text-align: left;
+}
+
+h1 {
+   font: verdana;
+   background-color: indigo;
+}
+
+h2 {
+    color: darkblue;
+}
+
+h3,
+  .bio {
+    color:indigo;
+    /* background-image: url("./images/moon-fancy.jpg"); */
+    background-size: cover;
+    background-position: center;
+}
+
+#introduction {
+}
+
+.center-image {
+    text-align: center;
+}
+
+.webapp {
+    width: 700px;
+    height: auto;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.graytext {
+    color: darkgray;
+}
+
+#person-name {
+    background-color:indigo;
+    color: white;
+    opacity: 0.9;
+}
+
+a[href*='machine'] {
+    color: lightgreen;
+}
+
+a:hover {
+    color: lime;
+}
+
+h1.bold {
+    font-family: Tahoma;
+}
+
+.project-list li {
+    font-family: monospace;
+    font-size: large;
+}

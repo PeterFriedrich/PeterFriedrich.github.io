@@ -1,5 +1,19 @@
+# Build output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Python (workflow tooling in scripts/ and tools/ is stdlib-only, but caches happen)
+__pycache__/
+*.py[cod]
+
+# Editor / OS
+.vscode/
+.DS_Store
 *.swp
-*tasks.json*
-.vscode/tasks.json
-/vscode
-*.json
+
+# Env
+.env
+.env.production
