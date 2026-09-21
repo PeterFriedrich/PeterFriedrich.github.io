@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SOCIAL } from '../consts';
+---
+
+<BaseLayout
+  title="About"
+  description="Peter Friedrich — data scientist and machine learning practitioner."
+>
+  <h1>About</h1>
+
+  <p class="lede">
+    I'm a data scientist and machine learning practitioner with a BSc in
+    mechanical engineering.
+  </p>
+
+  <p>
+    The engineering background is why I tend to start from the measurement
+    rather than the model: what was actually counted, by whom, and what the
+    number stops meaning at the edges. Most of what I build is applied — public
+    and civic datasets, visualizations that have to survive someone disagreeing
+    with them, and the pipelines underneath.
+  </p>
+
+  <h2>What I care about</h2>
+  <ul>
+    <li>Responsible development and use of ML models and applications.</li>
+    <li>Social-good work and volunteering, including hackathons and data dives.</li>
+    <li>Analysis that is reproducible by someone who isn't me.</li>
+  </ul>
+
+  <h2>Elsewhere</h2>
+  <ul>
+    {SOCIAL.map((link) => (
+      <li><a href={link.href} rel="me noopener">{link.label}</a></li>
+    ))}
+  </ul>
+
+  <!-- TODO(content): rewrite this page in your own voice — it is stitched from
+       the v1 site's About section and is deliberately short until you do.
+       Tracked in TODO.md. -->
+</BaseLayout>

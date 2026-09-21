@@ -1,0 +1,26 @@
+---
+import { NAV, SITE_TITLE } from '../consts';
+
+// Trailing slashes are normalized so `/blog/` and `/blog` both mark the nav
+// item current — the config says `trailingSlash: 'ignore'`, so both are live.
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`);
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">{SITE_TITLE}</a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        {NAV.map((item) => (
+          <li>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>

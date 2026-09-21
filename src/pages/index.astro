@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import ProjectList from '../components/ProjectList.astro';
+import { publishedPosts, featuredProjects } from '../lib/content';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const posts = (await publishedPosts()).slice(0, 4);
+const projects = await featuredProjects();
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <h1>Peter Friedrich</h1>
+  <p class="lede">
+    Data scientist and machine learning practitioner, with a mechanical
+    engineering background. I work mostly on applied problems — public data,
+    civic questions, and the unglamorous parts of getting a number right.
+  </p>
+
+  <div class="section-head">
+    <h2>Selected projects</h2>
+    <a href="/projects">All projects</a>
+  </div>
+  <ProjectList projects={projects} />
+
+  <div class="section-head">
+    <h2>Recent writing</h2>
+    <a href="/blog">All writing</a>
+  </div>
+  <PostList posts={posts} />
+</BaseLayout>

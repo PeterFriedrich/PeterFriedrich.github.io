@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectList from '../../components/ProjectList.astro';
+import { publishedProjects } from '../../lib/content';
+
+const projects = await publishedProjects();
+---
+
+<BaseLayout
+  title="Projects"
+  description="Data science and machine learning projects, with write-ups and source."
+>
+  <h1>Projects</h1>
+  <p class="lede">
+    Each entry links to its source. Where there is a write-up, it says what the
+    thing actually does and where it falls over.
+  </p>
+  <ProjectList projects={projects} />
+</BaseLayout>

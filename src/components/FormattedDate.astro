@@ -1,0 +1,22 @@
+---
+interface Props {
+  date: Date;
+  /** Label read by screen readers before the date, e.g. "Updated". */
+  prefix?: string;
+}
+
+const { date, prefix } = Astro.props;
+
+// UTC, always. Rendering a date in the build machine's local zone shifts
+// published dates by a day depending on where CI happens to run.
+const display = date.toLocaleDateString('en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<time datetime={date.toISOString().slice(0, 10)}>
+  {prefix && <span>{prefix} </span>}{display}
+</time>
