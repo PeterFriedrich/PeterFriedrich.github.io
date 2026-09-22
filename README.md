@@ -3,8 +3,7 @@
 Portfolio and blog. Static [Astro](https://astro.build) site, built by GitHub
 Actions, served by GitHub Pages.
 
-**Live:** https://peterfriedrich.github.io/ *(after the repo rename — see
-`docs/DEPLOY.md`)*
+**Live:** https://peterfriedrich.github.io/
 
 ## Quick start
 
