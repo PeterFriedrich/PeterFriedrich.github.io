@@ -181,3 +181,64 @@ reports skips rather than passes. CI runs build-then-test for this reason.
 
 All three are documented in `docs/DEPLOY.md`. Nothing else about the deploy
 lives outside the repo.
+
+---
+
+## Update — 01:10Z, after this file's own PR merged
+
+**Metadata for this section:** Opus 5 (`claude-opus-5`), effort `high` (checked,
+not recalled), same continuous session.
+
+⚠️ **Small delta on purpose.** Nothing above changed. No code, no content, no
+site change landed between the two writings — the site is still live and still
+empty. This section exists so the next session is not left wondering whether
+something happened in the gap. It did not.
+
+### What actually happened
+
+- **PR #11 (this file) merged** at 00:06Z. `origin/main` is now `eed9e7a`.
+  Verified it reached the trunk, not just origin:
+  `git merge-base --is-ancestor 9fd76ef origin/main` → true.
+- **Deploy run #3 went green** at 00:07Z on the #11 merge. Three deploy runs
+  now, all successful. The published site is byte-identical to run #2's — a
+  handoff file changes nothing the build reads.
+- **The scheduled check-in for PR #11 fired at 01:06Z**, found the PR already
+  merged, and stopped per its own instruction. `list_triggers` returns empty:
+  **no routines are pending for this repo.** Nothing is waiting to wake this
+  session.
+
+### One more environment gotcha, found by tripping over it
+
+**After a PR merges, resetting the local branch onto `main` makes the stop hook
+report "unpushed commits" that are not unpushed work.**
+
+`git checkout -B <branch> origin/main` leaves the *remote* feature branch behind
+at its old tip, so the local branch looks N commits ahead of its upstream — and
+`~/.claude/stop-hook-git-check.sh` reports exactly that. It is not a warning
+about lost work.
+
+**Check which it is before reacting:**
+
+```bash
+git rev-list --count origin/main..HEAD   # 0 => nothing at risk; it is all on main
+git branch -r --contains HEAD            # lists origin/main => already merged
+```
+
+If the count is `0`, the "unpushed" commit is the merge commit that is already
+on `main`. Pushing is safe and silences the hook (it just fast-forwards the
+stale branch); **do not open a PR for it** — there is nothing to review.
+`.githooks/pre-push` agrees: it computes the same `origin/main..HEAD` count and
+exits 0 when it is zero, treating the push as inert.
+
+### State at the end of this section
+
+| | |
+|---|---|
+| `origin/main` | `eed9e7a` |
+| Local branch | `claude/portfolio-blog-repo-setup-k850v9`, in sync with its remote, 0 ahead of `main` |
+| Working tree | Clean; `scripts/handoff_gap.py` silent |
+| Handoffs at top level | 2 (limit is 3, enforced by `tests/loaded-path.test.mjs`) |
+| Pending routines | None |
+| Site | Live, empty, unchanged |
+
+**§4's next steps are unchanged and still correct.** Start there.
