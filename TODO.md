@@ -22,6 +22,13 @@ the symptom before acting on it.
 
 ### Content
 
+- [ ] **Google Docs as the content source of truth** (owner decision
+      2026-10-03). Blocked on owner: a Drive folder shared with the server's
+      service account, a private content-repo name, and approval of a daily
+      export cron. Plan, export quirks and tooling:
+      `session-summary/2026-10-14-template-sync-and-gdocs.md` §2–§4. Needs a
+      `docs/DECISIONS.md` row and edits to `CLAUDE.md`/`docs/CONTENT.md` once
+      the shape is settled.
 - [ ] **Port the five v1 project write-ups** from `archive/v1-2022/index.html`,
       one entry each, checking every claim and link before it goes live:
       Omdena/DriQ Health IoT monitoring, Omdena/Azolla soil organic carbon,
