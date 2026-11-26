@@ -10,6 +10,10 @@ the symptom before acting on it.
 
 ## Open work
 
+### Waiting on the owner
+
+- [ ] **Owner runs:** `Create one Google Drive folder for portfolio writing and share it as Viewer with the server's service account (its email is client_email in ~/.config/server-ops/gdocs-sa.json)` — unblocks the Google Docs content pipeline below · confirm: `gdocs.py` can list the folder · low, no deadline · since 2026-10-14
+
 ### Deploy (first deploy landed 2026-09-21)
 
 - [ ] **The live site is currently EMPTY** — this is now a fact, not a risk.
